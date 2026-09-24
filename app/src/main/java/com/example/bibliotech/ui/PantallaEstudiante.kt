@@ -79,7 +79,6 @@ import com.example.bibliotech.ui.componentes.TarjetaEstudiante
 
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PantallaEstudiantes(
@@ -98,8 +97,6 @@ fun PantallaEstudiantes(
     // mediante BibliotecaApplication.
     val app =
         LocalContext.current.applicationContext as BibliotecaApplication
-
-
 
 
     // =========================================================
@@ -121,9 +118,6 @@ fun PantallaEstudiantes(
         }
     )
 
-
-
-
     // =========================================================
     // OBSERVAMOS LA LISTA DE ESTUDIANTES
     // =========================================================
@@ -131,17 +125,11 @@ fun PantallaEstudiantes(
     // automáticamente cuando cambia la lista.
     val estudiantes by viewModel.estudiantes.collectAsState()
 
-
-
-
     // =========================================================
     // CONFIGURACIÓN DEL SNACKBAR
     // =========================================================
     val snackbarHostState =
         remember { SnackbarHostState() }
-
-
-
 
     // =========================================================
     // CARGAR ESTUDIANTES
@@ -151,9 +139,6 @@ fun PantallaEstudiantes(
         viewModel.cargarEstudiantes()
     }
 
-
-
-
     // =========================================================
     // MOSTRAR MENSAJES
     // =========================================================
@@ -162,19 +147,12 @@ fun PantallaEstudiantes(
     // "✓ Estudiante eliminado correctamente"
     LaunchedEffect(mensaje) {
 
-
         if (mensaje != null) {
 
-
             snackbarHostState.showSnackbar(mensaje)
-
-
             onMensajeMostrado()
         }
     }
-
-
-
 
     // =========================================================
     // CAMPO DE BÚSQUEDA
@@ -182,9 +160,6 @@ fun PantallaEstudiantes(
     var textoBusqueda by remember {
         mutableStateOf("")
     }
-
-
-
 
     // =========================================================
     // LISTA DE GRADOS
@@ -197,17 +172,12 @@ fun PantallaEstudiantes(
     )
 
 
-
-
     // =========================================================
     // GRADO SELECCIONADO
     // =========================================================
     var gradoSeleccionado by remember {
         mutableStateOf("Todos")
     }
-
-
-
 
     // =========================================================
     // LISTA DE SECCIONES
@@ -220,17 +190,12 @@ fun PantallaEstudiantes(
     )
 
 
-
-
     // =========================================================
     // SECCIÓN SELECCIONADA
     // =========================================================
     var seccionSeleccionada by remember {
         mutableStateOf("Todas")
     }
-
-
-
 
     // =========================================================
     // FILTRAR ESTUDIANTES
@@ -255,17 +220,12 @@ fun PantallaEstudiantes(
                         ignoreCase = true
                     )
 
-
-
-
         // -----------------------------------------------------
         // FILTRAR POR GRADO
         // -----------------------------------------------------
         val coincideGrado =
             gradoSeleccionado == "Todos" ||
                     estudiante.grado == gradoSeleccionado
-
-
 
 
         // -----------------------------------------------------
@@ -275,9 +235,6 @@ fun PantallaEstudiantes(
             seccionSeleccionada == "Todas" ||
                     estudiante.seccion == seccionSeleccionada
 
-
-
-
         // -----------------------------------------------------
         // EL ESTUDIANTE DEBE CUMPLIR LOS TRES FILTROS
         // -----------------------------------------------------
@@ -286,14 +243,10 @@ fun PantallaEstudiantes(
                 coincideSeccion
     }
 
-
-
-
     // =========================================================
     // ESTRUCTURA PRINCIPAL
     // =========================================================
     Scaffold(
-
 
         // -----------------------------------------------------
         // SNACKBAR
@@ -305,8 +258,6 @@ fun PantallaEstudiantes(
         },
 
 
-
-
         // -----------------------------------------------------
         // BOTÓN FLOTANTE
         // -----------------------------------------------------
@@ -314,7 +265,6 @@ fun PantallaEstudiantes(
 
 
         floatingActionButton = {
-
 
             FloatingActionButton(
                 onClick = onAgregarEstudiante,
@@ -328,9 +278,6 @@ fun PantallaEstudiantes(
                 )
             }
         },
-
-
-
 
         // -----------------------------------------------------
         // BARRA SUPERIOR
@@ -348,9 +295,6 @@ fun PantallaEstudiantes(
 
     ) { padding ->
 
-
-
-
         // =====================================================
         // CONTENIDO
         // =====================================================
@@ -361,14 +305,10 @@ fun PantallaEstudiantes(
                 .fillMaxSize()
         ) {
 
-
-
-
             // =================================================
             // BUSCADOR
             // =================================================
             OutlinedTextField(
-
 
                 value = textoBusqueda,
 

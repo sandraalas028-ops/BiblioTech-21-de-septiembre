@@ -19,7 +19,7 @@ class EstudianteViewModel(application: Application) : AndroidViewModel(applicati
 
 
     private val repository =
-        (application as BibliotecaApplication).EstudianteRepository
+        (application as BibliotecaApplication).estudianteRepository
 
 
     // =========================
