@@ -1,13 +1,15 @@
 package com.example.bibliotech.ui;
 
-import androidx.annotation.OptIn
+
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -17,6 +19,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -76,10 +79,10 @@ var mostrarDialogo by remember{mutableStateOf(false)}
         Column(modifier= Modifier.padding(padding).fillMaxWidth()){
 
             Icon(imageVector= Icons.Default.Person,contentDescription="Estudiante",
-                modifier=Modifier.padding(60.dp),
+                modifier=Modifier.size(60.dp),
             tint=Color.White)
-            Spacer(modifier=Modifier.height(16.dp))
-            Text(text="$estudiante.nombres} ${estudiante.apellidos}",
+            Spacer(modifier=Modifier.height(10.dp))
+            Text(text="${estudiante.nombres} ${estudiante.apellidos}",
                 color=Color.White, fontWeight= FontWeight.Bold, fontSize=26.sp
             )
             Spacer(modifier=Modifier.height(16.dp))
@@ -100,9 +103,26 @@ var mostrarDialogo by remember{mutableStateOf(false)}
             { Text("Eliminar") }
             OutlinedButton(onClick={onRegresar()},modifier=Modifier.fillMaxWidth()
             ){Text("Regresar")}
-
         }
-
+        if(mostrarDialogo){
+            AlertDialog(
+                onDismissRequest={mostrarDialogo=false},
+                title={Text("Eliminar estudiante")},
+                text={Text("¿Está seguro de eliminar el estudiante?")},
+                confirmButton={
+                    TextButton(onClick={mostrarDialogo=false
+                    onEliminar(estudiante)}
+                    ){
+                        Text("Eliminar")}
+                },
+                dismissButton={
+                    TextButton(
+                        onClick={
+                            mostrarDialogo=false }
+                    ){ Text("Cancelar")}
+                }
+            )
+        }
 
     }
 }

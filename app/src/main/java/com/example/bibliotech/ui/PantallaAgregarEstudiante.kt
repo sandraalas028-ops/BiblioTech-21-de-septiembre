@@ -57,208 +57,247 @@ fun PantallaAgregarEstudiante(
 
     //-------------------------INTERFAZ-----------------------------
     Scaffold(
+
         containerColor = Color.Black,
         topBar = {
+
             TopAppBar(
+
                 title = {
+
                     Text("Agregar Estudiante", color = Color.White)
+
                 },
+
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Color.Black
                 )
 
+
             )
-        },
-    ) { paddingValues ->
+
+
+        }
+    ) {
+            paddingValues ->
+
         Column(
-            modifier=Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues)
                 .fillMaxSize()
                 .background(Color.Black)
                 .verticalScroll(rememberScrollState())
-                .padding(28.dp)
+                .padding(20.dp)
         ){
-            //--------------CARNET----------------
+            //Carnet del estudiante
             OutlinedTextField(
-                value=carnet,
-                onValueChange={carnet = it},
-                label={Text("Carnet")},
-                modifier=Modifier.fillMaxWidth(),
-                colors= OutlinedTextFieldDefaults.colors(
-                    focusedTextColor=Color.White,
-                    unfocusedTextColor=Color.White,
-                    focusedBorderColor=Color.Blue,
-                    unfocusedBorderColor = Color.LightGray,
-                    focusedLabelColor = Color.Blue,
-                    unfocusedLabelColor = Color.White
+                value = carnet,
+                onValueChange = { carnet = it },
+                label = { Text("Número de Carnet") },
+                modifier = Modifier.fillMaxSize(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color(0xFF3B82F6),
+                    unfocusedBorderColor = Color.White,
+                    focusedLabelColor = Color(0xFF60A5FA),
+                    unfocusedLabelColor = Color.LightGray
                 )
 
             )
-            Spacer(modifier=Modifier.height(10.dp))
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+            //nombres del estudiante
             OutlinedTextField(
-                value=nombres,
-                onValueChange={nombres = it},
-                label={Text("Nombres")},
-                modifier=Modifier.fillMaxWidth(),
-                colors= OutlinedTextFieldDefaults.colors(
-                    focusedTextColor=Color.White,
-                    unfocusedTextColor=Color.White,
-                    focusedBorderColor=Color.Blue,
-                    unfocusedBorderColor = Color.LightGray,
-                    focusedLabelColor = Color.Blue,
-                    unfocusedLabelColor = Color.White
+                value = nombres,
+                onValueChange = { nombres = it },
+                label = { Text("Nombres del estudiante") },
+                modifier = Modifier.fillMaxSize(),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color(0xFF3B82F6),
+                    unfocusedBorderColor = Color.White,
+                    focusedLabelColor = Color(0xFF60A5FA),
+                    unfocusedLabelColor = Color.LightGray
                 )
 
             )
-            Spacer(modifier=Modifier.height(10.dp))
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+
+            //Apellidos del estudiante
             OutlinedTextField(
-                value=apellidos,
-                onValueChange={apellidos = it},
-                label={Text("Apellidos")},
-                modifier=Modifier.fillMaxWidth(),
-                colors= OutlinedTextFieldDefaults.colors(
-                    focusedTextColor=Color.White,
-                    unfocusedTextColor=Color.White,
-                    focusedBorderColor=Color.Blue,
-                    unfocusedBorderColor = Color.LightGray,
-                    focusedLabelColor = Color.Blue,
-                    unfocusedLabelColor = Color.White
+                value = apellidos,
+                onValueChange = { apellidos = it },
+                label = { Text("Apellidos del estudiante") },
+
+                modifier = Modifier.fillMaxSize(),
+
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.White,
+                    unfocusedTextColor = Color.White,
+                    focusedBorderColor = Color(0xFF3B82F6),
+                    unfocusedBorderColor = Color.White,
+                    focusedLabelColor = Color(0xFF60A5FA),
+                    unfocusedLabelColor = Color.LightGray
                 )
 
             )
-            Spacer(modifier=Modifier.height(10.dp))
 
-            //------------------------GRADO-------------------------
+            Spacer(modifier = Modifier.height(10.dp))
+
+
+            //Grado del estudiante
             ExposedDropdownMenuBox(
                 expanded = expandirGrado,
-                onExpandedChange = {expandirGrado =!expandirGrado}
-            ){
+                onExpandedChange = { expandirGrado = !expandirGrado }
+            )
+            {
                 OutlinedTextField(
-                    value=grado,
-                    onValueChange={},
-                    readOnly=true,
-                    label={Text("Grado")},
+                    value = grado,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Grado") },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded=expandirGrado
+                            expanded = expandirGrado
                         )
+
                     },
-                    modifier=Modifier.fillMaxWidth(),
-                    colors= OutlinedTextFieldDefaults.colors(
-                        focusedTextColor=Color.White,
-                        unfocusedTextColor=Color.White,
-                        focusedBorderColor=Color.Blue,
-                        unfocusedBorderColor = Color.LightGray,
-                        focusedLabelColor = Color.Blue,
-                        unfocusedLabelColor = Color.White,
+                    modifier = Modifier.fillMaxSize().menuAnchor(),
+
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = Color(0xFF3B82F6),
+                        unfocusedBorderColor = Color.White,
+                        focusedLabelColor = Color(0xFF60A5FA),
+                        unfocusedLabelColor = Color.LightGray
+                    )
                 )
-                )
+
                 ExposedDropdownMenu(
-                    expanded=expandirGrado,
-                    onDismissRequest ={ expandirGrado=false}
-                ){
-                    grados.forEach{
+                    expanded = expandirGrado,
+                    onDismissRequest = { expandirGrado = false }
+                ) {
+                    grados.forEach {
                         DropdownMenuItem(
-                            text={(it)},
-                            onClick={
-                                grado=it
+                            text = { Text(it) },
+                            onClick = {
+                                grado = it
                                 expandirGrado = false
                             }
-                        )
 
+                        )
                     }
                 }
 
+
             }
 
-            Spacer(modifier=Modifier.height(10.dp))
-            //------------SECCION-------------------
+            Spacer(modifier = Modifier.height(10.dp))
+
+            //Seccion del estudiante
             ExposedDropdownMenuBox(
                 expanded = expandirSeccion,
-                 {expandirSeccion =!expandirSeccion}
-            ){
+                onExpandedChange = { expandirSeccion = !expandirSeccion }
+            )
+            {
                 OutlinedTextField(
-                    value=seccion,
-                    onValueChange={},
-                    readOnly=true,
-                    label={Text("Sección")},
+                    value = seccion,
+                    onValueChange = {},
+                    readOnly = true,
+                    label = { Text("Seccion") },
                     trailingIcon = {
                         ExposedDropdownMenuDefaults.TrailingIcon(
-                            expanded=expandirSeccion
+                            expanded = expandirSeccion
                         )
+
                     },
-                    modifier=Modifier.fillMaxWidth(),
-                    colors= OutlinedTextFieldDefaults.colors(
-                        focusedTextColor=Color.White,
-                        unfocusedTextColor=Color.White,
-                        focusedBorderColor=Color.Blue,
-                        unfocusedBorderColor = Color.LightGray,
-                        focusedLabelColor = Color.Blue,
-                        unfocusedLabelColor = Color.White,
+                    modifier = Modifier.fillMaxSize().menuAnchor(),
+
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White,
+                        focusedBorderColor = Color(0xFF3B82F6),
+                        unfocusedBorderColor = Color.White,
+                        focusedLabelColor = Color(0xFF60A5FA),
+                        unfocusedLabelColor = Color.LightGray
                     )
                 )
+
                 ExposedDropdownMenu(
-                    expanded=expandirSeccion,
-                    onDismissRequest ={ expandirSeccion=false}
-                ){
-                    secciones.forEach{
+                    expanded = expandirSeccion,
+                    onDismissRequest = { expandirSeccion = false }
+                ) {
+                    secciones.forEach {
                         DropdownMenuItem(
-                            text={(it)},
-                            onClick={
-                                seccion=it
+                            text = { Text(it) },
+                            onClick = {
+                                seccion = it
                                 expandirSeccion = false
                             }
-                        )
 
+                        )
                     }
                 }
-                Spacer(modifier=Modifier.height(10.dp))
-                //***ESTADO ACTIVO/INACTIVO*****
-                Row{
-                    Checkbox(
-                        checked=activo,
-                        onCheckedChange = {activo=it}
-                    )
 
-                    Text(
-                        text="Activo",
-                        color=Color.White,
-                        modifier=Modifier.padding(top=8.dp)
-                    )
 
-                    Spacer(modifier=Modifier.height(10.dp))
-                    //*****BOTONES*****
-                    Button(onClick={
-                        val nuevoEstudiante= Estudiante(
-                            carnet=carnet,
-                            nombres=nombres,
-                            apellidos=apellidos,
-                            grado=grado,
-                            seccion=seccion,
-                            activo=activo
-                        )
-                        viewModel.insertarEstudiante(nuevoEstudiante)
-                        onGuardar()
-                    },modifier=Modifier.fillMaxWidth()
-                    ){
-                        Text("Guardar Estudiante")
-                    }
-                    Spacer(modifier=Modifier.padding(10.dp))
-
-                    Button(onClick={
-                        onCancelar()
-                    },modifier=Modifier.fillMaxWidth()
-                    ){Text("Cancelar")
-                    }
             }
 
+            Spacer(modifier = Modifier.height(10.dp))
+            //Estado del estudiante
+            Row{
+                Checkbox(
+                    checked = activo,
+                    onCheckedChange = {activo = it}
+                )
 
+                Text(
+                    text = "Activo",
+                    color = Color.White,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            //Botones
+
+            Button(onClick = {
+                val nuevoEstudiante = Estudiante(
+                    carnet = carnet,
+                    nombres = nombres,
+                    apellidos = apellidos,
+                    grado = grado,
+                    seccion = seccion,
+                    activo = activo
+                )
+                viewModel.insertarEstudiante(nuevoEstudiante)
+                onGuardar()
+            },
+                modifier = Modifier.fillMaxSize()
+            ){
+                Text("Guardar Estudiante")
+
+            }
+
+            Spacer(modifier = Modifier.padding(10.dp))
+
+            Button(onClick = {
+                onCancelar()
+            },
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Text("Cancelar")
 
             }
 
 
         }
+
     }
 
 }
