@@ -16,9 +16,10 @@ import com.example.bibliotech.data.librosPrueba
 import androidx.lifecycle.ViewModelProvider
 import com.example.bibliotech.viewmodel.libroViewModel
 import androidx.compose.runtime.getValue
-
+import com.example.bibliotech.ui.PantallaEditarEstudiante
 import androidx.compose.runtime.*
 import androidx.navigation.NavController
+import com.example.bibliotech.model.Estudiante
 import com.example.bibliotech.viewmodel.EstudianteViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,24 +60,24 @@ fun Navegacion(
                     navController.popBackStack()
                 },
 
-                {idLibro->navController.navigate("detalle/$idLibro")},
-                onAgregarLibro={navController.navigate("agregar")},
+                { idLibro -> navController.navigate("detalle/$idLibro") },
+                onAgregarLibro = { navController.navigate("agregar") },
                 mensaje = mensaje,
-                onMensajeMostrado = {mensaje = null}
+                onMensajeMostrado = { mensaje = null }
             )
         }
 
         //--RUTA PARA ENVIAR A PANTALLA AGREGAR LIBRO
-        composable("agregar"){
+        composable("agregar") {
 
             PantallaAgregarLibro(
-                viewModel=viewModel(),
-                onGuardar={
+                viewModel = viewModel(),
+                onGuardar = {
                     //mensaje a mostrar cuando se guarde el libro
                     mensaje = "✅ Libro guardado con éxito "
                     navController.popBackStack()
                 },
-                onCancelar={
+                onCancelar = {
 
                     navController.popBackStack()
                 }
@@ -84,53 +85,53 @@ fun Navegacion(
             )
         }
         composable("detalle/{idLibro}") {
-            val idLibro=it.arguments?.getString("idLibro")?.toIntOrNull()
-            val app=LocalContext.current.applicationContext as BibliotecaApplication
+            val idLibro = it.arguments?.getString("idLibro")?.toIntOrNull()
+            val app = LocalContext.current.applicationContext as BibliotecaApplication
 
             val viewModel: libroViewModel = viewModel(
-                factory=object: ViewModelProvider.Factory{
-                    override fun <T: ViewModel> create(
-                        modelClass:Class<T>
-                    ): T{
+                factory = object : ViewModelProvider.Factory {
+                    override fun <T : ViewModel> create(
+                        modelClass: Class<T>
+                    ): T {
                         return libroViewModel(app as Application) as T
                     }
-                 }
+                }
 
             )
             val libro by viewModel.libroSeleccionado.collectAsState()
 
             //
-            LaunchedEffect(idLibro){
+            LaunchedEffect(idLibro) {
 
-                if(idLibro!=null){
+                if (idLibro != null) {
                     viewModel.cargarLibroPorId(idLibro)
                 }
             }
 
-            if(libro!=null){
-                PantallaDetalleLibro(Libro = libro!!,
-                    navController=navController,
-                    onRegresar={navController.popBackStack()},
-                    onEditar={
-                        idLibro -> navController.navigate("editar/$idLibro")
+            if (libro != null) {
+                PantallaDetalleLibro(
+                    Libro = libro!!,
+                    navController = navController,
+                    onRegresar = { navController.popBackStack() },
+                    onEditar = { idLibro ->
+                        navController.navigate("editar/$idLibro")
                     },
-                    onEliminar={
-                        libroEliminar ->viewModel.eliminarLibro(libroEliminar)
-                        mensaje=" ✅ Libro eliminado con éxito"
+                    onEliminar = { libroEliminar ->
+                        viewModel.eliminarLibro(libroEliminar)
+                        mensaje = " ✅ Libro eliminado con éxito"
                         //regresa a la pantalla de catálogo
                         navController.popBackStack()
                     })
             }
 
 
-
         }
 
-        composable("editar/{idLibro}"){
-            val idLibro=it.arguments?.getString("idLibro")?.toIntOrNull()
-            val app=LocalContext.current.applicationContext as BibliotecaApplication
-            val viewModel:libroViewModel=viewModel(
-                factory=object : ViewModelProvider.Factory{
+        composable("editar/{idLibro}") {
+            val idLibro = it.arguments?.getString("idLibro")?.toIntOrNull()
+            val app = LocalContext.current.applicationContext as BibliotecaApplication
+            val viewModel: libroViewModel = viewModel(
+                factory = object : ViewModelProvider.Factory {
                     override fun <T : ViewModel> create(
                         modelClass: Class<T>
                     ): T {
@@ -140,23 +141,23 @@ fun Navegacion(
             )
 
             val libro by viewModel.libroSeleccionado.collectAsState()
-            LaunchedEffect(idLibro){
-                if(idLibro!=null){
-                viewModel.cargarLibroPorId(idLibro)
+            LaunchedEffect(idLibro) {
+                if (idLibro != null) {
+                    viewModel.cargarLibroPorId(idLibro)
                 }
 
-        }
-            if(libro!=null){
+            }
+            if (libro != null) {
                 PantallaEditarLibro(
 
-                    Libro=libro!!,
-                  /*  onGuardar={libroEditado ->
+                    Libro = libro!!,
+                    /*  onGuardar={libroEditado ->
                         viewModel.actualizarLibro(libroEditado)
                         //mensaje a mostrar cuando se guarde el libro
                         mensaje=" ✅ Libro editado con éxito"
                         navController.popBackStack()
                     } */
-                    onGuardar={ libroEditado ->
+                    onGuardar = { libroEditado ->
                         viewModel.actualizarLibro(libroEditado)
                         navController.previousBackStackEntry
                             ?.savedStateHandle
@@ -167,7 +168,7 @@ fun Navegacion(
                         navController.popBackStack()
 
                     },
-                    onCancelar={
+                    onCancelar = {
                         navController.popBackStack()
                     }
 
@@ -175,16 +176,15 @@ fun Navegacion(
                 )
 
 
-
             }
 
-            }
+        }
 
         composable("prestamo") {
             PantallaPrestamo(
-            onRegresar = {
-                navController.popBackStack()
-            }
+                onRegresar = {
+                    navController.popBackStack()
+                }
             )
         }
 
@@ -196,28 +196,29 @@ fun Navegacion(
                 })
 
 
-            }
+        }
 
-        composable("estudiantes"){
+        composable("estudiantes") {
             PantallaEstudiantes(
-                onRegresar={
+                onRegresar = {
                     navController.popBackStack()
                 },
-                onVerDetalles={idEstudiante ->
+                onVerDetalles = { idEstudiante ->
                     navController.navigate("detalleEstudiante/$idEstudiante")
                 },
-                onAgregarEstudiante={
-                  navController.navigate("agregarEstudiante")
+                onAgregarEstudiante = {
+                    navController.navigate("agregarEstudiante")
                 },
-                mensaje=mensaje,
+                mensaje = mensaje,
                 onMensajeMostrado = {
-                    mensaje=null})
-                }
+                    mensaje = null
+                })
+        }
 
-        composable("agregarEstudiante"){
-            val app=LocalContext.current.applicationContext as BibliotecaApplication
-            val viewModel:EstudianteViewModel=viewModel(
-                factory=object : ViewModelProvider.Factory{
+        composable("agregarEstudiante") {
+            val app = LocalContext.current.applicationContext as BibliotecaApplication
+            val viewModel: EstudianteViewModel = viewModel(
+                factory = object : ViewModelProvider.Factory {
                     override fun <T : ViewModel> create(
                         modelClass: Class<T>
                     ): T {
@@ -227,9 +228,9 @@ fun Navegacion(
             )
             PantallaAgregarEstudiante(
 
-                onGuardar= {
+                onGuardar = {
                     //mensaje a mostrar cuando se guarde el estudiante
-                    mensaje=" ✅ Estudiante guardado con éxito"
+                    mensaje = " ✅ Estudiante guardado con éxito"
                     navController.popBackStack()
                 },
                 onCancelar = {
@@ -238,13 +239,13 @@ fun Navegacion(
                 viewModel = viewModel
             )
         }
-        composable("detalleEstudiante/{idEstudiante}"){
+        composable("detalleEstudiante/{idEstudiante}") {
             val idEstudiante = it.arguments
                 ?.getString("idEstudiante")
                 ?.toIntOrNull()
-            val app=LocalContext.current.applicationContext as BibliotecaApplication
-            val viewModel:EstudianteViewModel=viewModel(
-                factory=object : ViewModelProvider.Factory{
+            val app = LocalContext.current.applicationContext as BibliotecaApplication
+            val viewModel: EstudianteViewModel = viewModel(
+                factory = object : ViewModelProvider.Factory {
                     override fun <T : ViewModel> create(
                         modelClass: Class<T>
                     ): T {
@@ -253,44 +254,55 @@ fun Navegacion(
                 }
             )
             val estudiante by viewModel.estudianteSeleccionado.collectAsState()
-            LaunchedEffect(idEstudiante){
-                if(idEstudiante!=null){
+            LaunchedEffect(idEstudiante) {
+                if (idEstudiante != null) {
                     viewModel.cargarEstudiantePorId(idEstudiante)
                 }
             }
-            if(estudiante!=null){
+            if (estudiante != null) {
                 PantallaDetalleEstudiante(
-                    estudiante=estudiante!!,
-                    onRegresar={navController.popBackStack()},
-                    navController=navController,
-                    onEditar={ idEstudiante ->
+                    estudiante = estudiante!!,
+                    onRegresar = { navController.popBackStack() },
+                    navController = navController,
+                    onEditar = { idEstudiante ->
                         navController.navigate("editarEstudiante/$idEstudiante")
                     },
-                    onEliminar = {estudianteEliminar ->
+                    onEliminar = { estudianteEliminar ->
                         viewModel.eliminarEstudiante(estudianteEliminar)
-                         mensaje=" ✅ Estudiante eliminado con éxito"
+                        mensaje = " ✅ Estudiante eliminado con éxito"
                         navController.popBackStack()
                     }
                 )
-                val idEstudiante = it.arguments
-                    ?.getString("idEstudiante")
-                    ?.toIntOrNull()
-                val app=LocalContext.current.applicationContext as BibliotecaApplication
-                val viewModel:EstudianteViewModel=viewModel(
-                    factory=object : ViewModelProvider.Factory{
-                        override fun <T : ViewModel> create(
-                            modelClass: Class<T>
-                        ): T {
-                            return EstudianteViewModel(app as Application) as T
-                        }
-                    }
-                )
-                val estudiante by viewModel.estudianteSeleccionado.collectAsState()
-                 LaunchedEffect(idEstudiante){
-                     viewModel.cargarEstudiantePorId(idEstudiante)
-                 }
+
+
             }
-            if(estudiante!=null){
+
+        }
+
+        composable("editarEstudiante/{idEstudiante}") {
+
+
+            val idEstudiante = it.arguments
+                ?.getString("idEstudiante")
+                ?.toIntOrNull()
+            val app = LocalContext.current.applicationContext as BibliotecaApplication
+            val viewModel: EstudianteViewModel = viewModel(
+                factory = object : ViewModelProvider.Factory {
+                    override fun <T : ViewModel> create(
+                        modelClass: Class<T>
+                    ): T {
+                        return EstudianteViewModel(app as Application) as T
+                    }
+                }
+            )
+            val estudiante by viewModel.estudianteSeleccionado.collectAsState()
+            LaunchedEffect(idEstudiante) {
+                if (idEstudiante != null) {
+                    viewModel.cargarEstudiantePorId(idEstudiante)
+                }
+
+            }
+            if(estudiante !=null){
                 PantallaEditarEstudiante(
                     estudiante=estudiante!!,
                     onGuardar={estudianteEditado->
@@ -298,14 +310,16 @@ fun Navegacion(
                         navController.previousBackStackEntry
                             ?.savedStateHandle
                             ?.set("mensaje","✅ Cambios guardados correctamente")
-                         navController.popBackStack()
+                        navController.popBackStack()
                     },
                     onCancelar={navController.popBackStack()}
                 )
             }
         }
 
+
         }
+
     }
 
 

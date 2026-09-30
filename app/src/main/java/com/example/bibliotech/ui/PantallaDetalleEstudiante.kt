@@ -87,6 +87,8 @@ var mostrarDialogo by remember{mutableStateOf(false)}
             )
             Spacer(modifier=Modifier.height(16.dp))
             Text(text="$ Carnet: ${estudiante.carnet}", color=Color.White)
+            Text(text="$ Nombres: ${estudiante.nombres}", color=Color.White)
+            Text(text="$ Apellidos: ${estudiante.apellidos}", color=Color.White)
             Text(text="$ Grado: ${estudiante.grado}", color=Color.White)
             Text(text="$ Sección: ${estudiante.seccion}", color=Color.White)
            Text(text=if(estudiante.activo)"Estado: Activo"
