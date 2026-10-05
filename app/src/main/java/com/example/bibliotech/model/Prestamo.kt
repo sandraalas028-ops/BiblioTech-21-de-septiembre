@@ -32,7 +32,7 @@ data class Prestamo (
     //fecha en que se presta
     val fechaPrestamo: String,
     //fecha en que se debe devolver
-    val fechaDevolucion: String,
+    val fechaDevolucion: String? = null,
     //Estado del préstamo
     val devuelto: Boolean = false
 ){
