@@ -49,7 +49,16 @@ fun Navegacion(
                 },
                 onEstudiante = {
                     navController.navigate("estudiantes")
+                },
+                // Mensaje enviado desde otras pantallas. // ------------- AQUI
+                mensaje = mensaje,
+
+
+                // Limpiamos el mensaje después de mostrarlo.
+                onMensajeMostrado = {
+                    mensaje = null
                 }
+
             )
         }
 
